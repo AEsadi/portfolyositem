@@ -1,110 +1,271 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+let revealObserver
+const isDark = ref(false)
+
+const skills = [
+  {
+    index: '01',
+    title: 'Frontend',
+    items: ['HTML', 'CSS', 'JavaScript', 'Vue.js (Vue)', 'Bootstrap', 'DevExtreme'],
+  },
+  {
+    index: '02',
+    title: 'Backend',
+    items: ['C#', '.NET', 'ASP.NET Core Web API', 'ASP.NET Core MVC', 'Entity Framework Core'],
+  },
+  {
+    index: '03',
+    title: 'Veri, Bulut & Operasyon',
+    items: [
+      'Microsoft SQL Server',
+      'Azure AI Translator',
+      'Git / GitHub',
+      'GitHub Actions',
+      'Jenkins',
+      'IIS Deployment',
+      'Hangfire',
+    ],
+  },
+]
+
+const projects = [
+  {
+    type: 'Konaklama Teknolojileri',
+    title: 'Multi-tenant Otel Yönetim Sistemi',
+    summary:
+      'ASP.NET Core tabanlı çok kiracılı web uygulamasında veri modeli, kullanıcı işlemleri ve iş akışları üzerine çalışıyorum.',
+    details: ['ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'REST servisleri'],
+  },
+  {
+    type: 'Kurumsal Sistemler',
+    title: 'Navision Entegre Web ERP',
+    summary:
+      '.NET tabanlı kurumsal ERP sisteminde backend iş akışları, raporlama ve Navision entegrasyonları geliştiriyorum.',
+    details: ['.NET', 'MediatR', 'DevExpress Reporting', 'Navision'],
+  },
+]
+
+function applyTheme(theme, persist = true) {
+  const nextTheme = theme === 'dark' ? 'dark' : 'light'
+  isDark.value = nextTheme === 'dark'
+  document.documentElement.dataset.theme = nextTheme
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark.value ? '#1d1713' : '#f3eee5')
+
+  if (persist) localStorage.setItem('portfolio-theme', nextTheme)
+}
+
+function toggleTheme() {
+  applyTheme(isDark.value ? 'light' : 'dark')
+}
+
+onMounted(() => {
+  applyTheme(document.documentElement.dataset.theme || 'light', false)
+
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          revealObserver.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.14 },
+  )
+
+  document.querySelectorAll('[data-reveal]').forEach((element) => revealObserver.observe(element))
+})
+
+onBeforeUnmount(() => revealObserver?.disconnect())
 </script>
 
 <template>
-  <div class="portfolio-container">
-    <div class="info-card">
-      <h1>Merhaba, Ben Esad!</h1>
-      <h2>Bilgisayar Programcılığı Öğrencisi</h2>
-      <p>Balıkesir Üniversitesi Bilgisayar Programcılığı bölümü 1. sınıf öğrencisiyim.</p>
-      <p>Daha fazla bilgi için aşağıdaki ikonları kullanabilirsiniz.</p>
-    </div>
-    <div class="icon-links">
-      <a href="https://github.com/AEsadi" target="_blank" aria-label="GitHub">
-        <svg height="32" width="32" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Ana sayfaya dön">
+        <span class="brand-mark">AE</span>
+        <span>Esad İkiz</span>
       </a>
-      <a href="https://www.linkedin.com/in/esad-ikiz-b971662a9/" target="_blank" aria-label="LinkedIn">
-        <svg height="32" width="32" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.28c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.28h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z"/>
-        </svg>
-      </a>
-    </div>
+
+      <nav class="site-nav" aria-label="Ana menü">
+        <a href="#hakkimda">Hakkımda</a>
+        <a href="#deneyim">Deneyim</a>
+        <a href="#yetkinlikler">Yetkinlikler</a>
+      </nav>
+
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          :aria-label="isDark ? 'Açık temaya geç' : 'Koyu temaya geç'"
+          :aria-pressed="isDark"
+          :title="isDark ? 'Açık tema' : 'Koyu tema'"
+          @click="toggleTheme"
+        >
+          <svg v-if="isDark" aria-hidden="true" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3.5" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42" />
+          </svg>
+          <svg v-else aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.5 8.5 0 1 0 20.2 15.2Z" />
+          </svg>
+        </button>
+        <a class="header-contact" href="mailto:ikizesad99@gmail.com">E-posta</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow hero-kicker">Full Stack Developer · İstanbul</p>
+          <h1 id="hero-title">
+            <span class="hero-name-first">Abdurrahman</span>
+            <em>Esad İkiz</em>
+          </h1>
+          <p class="hero-intro">
+            .NET, ASP.NET Core, Vue ve SQL Server ile kurumsal web uygulamaları geliştirme deneyimine
+            sahibim.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#deneyim">
+              İş deneyimi
+              <span aria-hidden="true">↘</span>
+            </a>
+            <a class="text-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer">GitHub profili ↗</a>
+          </div>
+        </div>
+
+        <a class="scroll-cue" href="#hakkimda">
+          <span>Devam et</span>
+          <span class="scroll-line" aria-hidden="true"></span>
+        </a>
+      </section>
+
+      <section id="hakkimda" class="about section-pad" data-reveal>
+        <div class="section-index">
+          <span>01</span>
+          <span>Hakkımda</span>
+        </div>
+        <div class="about-content">
+          <p class="eyebrow">Kısa profil</p>
+          <h2>.NET ve Vue ekosisteminde full stack geliştirme.</h2>
+          <div class="about-columns">
+            <p>
+              Kurumsal ERP ve otel yönetim sistemlerinde backend servisleri, veri modeli, raporlama ve
+              kullanıcı arayüzü geliştirme süreçlerinde deneyim kazandım.
+            </p>
+            <p>
+              Balıkesir Üniversitesi Bilgisayar Programcılığı ön lisans programından Haziran 2026'da 3.44
+              genel not ortalamasıyla mezun oldum.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="deneyim" class="work-section section-pad">
+        <div class="section-heading" data-reveal>
+          <div class="section-index light">
+            <span>02</span>
+            <span>Deneyim</span>
+          </div>
+          <div>
+            <h2>İş deneyimi</h2>
+          </div>
+        </div>
+
+        <div class="experience" data-reveal>
+          <div class="experience-meta">
+            <p>ST ERP Danışmanlık</p>
+            <span>Haziran 2025 — Günümüz</span>
+            <span>İstanbul, Kadıköy</span>
+          </div>
+          <div class="experience-role">
+            <span class="eyebrow light">Görev kapsamı</span>
+            <p>
+              Full Stack Developer olarak backend servisleri, veri tabanı süreçleri, raporlama ve üretim ortamı
+              sorunlarının çözümünde görev alıyorum.
+            </p>
+            <a href="https://st-erp.com" target="_blank" rel="noreferrer">st-erp.com ↗</a>
+          </div>
+        </div>
+
+        <div class="project-list">
+          <article v-for="(project, index) in projects" :key="project.title" class="project" data-reveal>
+            <span class="project-number">0{{ index + 1 }}</span>
+            <div class="project-main">
+              <p class="eyebrow light">{{ project.type }}</p>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.summary }}</p>
+            </div>
+            <ul class="project-tech" :aria-label="`${project.title} teknolojileri`">
+              <li v-for="item in project.details" :key="item">{{ item }}</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="yetkinlikler" class="skills-section section-pad">
+        <div class="section-heading" data-reveal>
+          <div class="section-index">
+            <span>03</span>
+            <span>Yetkinlikler</span>
+          </div>
+          <div>
+            <p class="eyebrow">Teknoloji ve araçlar</p>
+            <h2>Teknik yetkinlikler</h2>
+          </div>
+        </div>
+
+        <div class="skill-list">
+          <article v-for="skill in skills" :key="skill.title" class="skill-row" data-reveal>
+            <span>{{ skill.index }}</span>
+            <h3>{{ skill.title }}</h3>
+            <ul>
+              <li v-for="item in skill.items" :key="item">{{ item }}</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="education section-pad" data-reveal>
+        <div class="section-index">
+          <span>04</span>
+          <span>Eğitim</span>
+        </div>
+        <div class="education-main">
+          <p class="eyebrow">Eğitim bilgisi</p>
+          <h2>Balıkesir Üniversitesi</h2>
+          <div class="education-details">
+            <p>Bilgisayar Programcılığı<br /><span>Ön Lisans</span></p>
+            <p>Eylül 2024 — Haziran 2026<br /><span>GPA 3.44</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section section-pad" data-reveal>
+        <p class="eyebrow light">İletişim</p>
+        <h2>İletişim bilgileri ve<br />profesyonel profiller.</h2>
+        <div class="contact-bottom">
+          <a class="button button-light" href="mailto:ikizesad99@gmail.com">
+            E-posta gönder
+            <span aria-hidden="true">↗</span>
+          </a>
+          <div class="contact-links">
+            <a href="mailto:ikizesad99@gmail.com">E-posta ↗</a>
+            <a href="tel:+905442438922">Telefon ↗</a>
+            <a href="https://www.linkedin.com/in/esad-ikiz-b971662a9/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="https://github.com/AEsadi" target="_blank" rel="noreferrer">GitHub ↗</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© {{ new Date().getFullYear() }} Abdurrahman Esad İkiz</span>
+      <span>Full Stack Developer · İstanbul</span>
+      <a href="#top">Yukarı dön ↑</a>
+    </footer>
   </div>
 </template>
-
-<style scoped>
-:root {
-  --background: linear-gradient(135deg, #23272a 0%, #35495e 100%);
-  --container-bg: rgba(35, 39, 42, 0.95);
-  --card-bg: #222c2a;
-  --text-main: #f5f6fa;
-  --text-secondary: #bfc9d1;
-  --accent: #42b883;
-  --icon-bg: #263a36;
-  --icon-hover-bg: #42b88322;
-  --shadow: 0 2px 24px 0 #42b88355;
-}
-body {
-  background: var(--background);
-}
-.portfolio-container {
-  text-align: left;
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 32px;
-  background: var(--container-bg);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  color: var(--text-main);
-}
-.info-card {
-  background: var(--card-bg);
-  border-radius: 14px;
-  box-shadow: 0 2px 24px 0 #42b88344;
-  padding: 28px 24px 20px 24px;
-  margin-bottom: 2em;
-  border: 1.5px solid #42b88344;
-}
-h1 {
-  margin-bottom: 0.5em;
-  color: var(--accent);
-  letter-spacing: 1px;
-}
-h2 {
-  margin-top: 0;
-  color: var(--text-secondary);
-  font-size: 0.95em;
-  font-style: italic;
-  font-weight: normal;
-}
-p {
-  color: var(--text-secondary);
-  font-size: 1.1em;
-}
-.icon-links {
-  margin-top: 1.5em;
-  display: flex;
-  gap: 24px;
-}
-.icon-links a {
-  display: inline-flex;
-  align-items: center;
-  color: var(--accent);
-  background: var(--icon-bg);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  justify-content: center;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  box-shadow: 0 2px 8px rgba(66,184,131,0.18);
-  font-size: 1.5em;
-  border: 1.5px solid #42b88344;
-}
-.icon-links a:hover {
-  background: var(--icon-hover-bg);
-  color: #fff;
-  box-shadow: 0 4px 16px #42b88355;
-}
-.icon-links svg {
-  display: block;
-  fill: #f5f5f5;
-  transition: fill 0.2s;
-}
-.icon-links a:hover svg {
-  fill: #42b883;
-}
-</style>

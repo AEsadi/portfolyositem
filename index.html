@@ -1,10 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Esad İkiz</title>
+    <meta
+      name="description"
+      content="Abdurrahman Esad İkiz — .NET, ASP.NET Core ve Vue.js ile modern web uygulamaları geliştiren Full Stack Developer."
+    />
+    <meta name="theme-color" content="#f3eee5" />
+    <script>
+      ;(() => {
+        try {
+          const savedTheme = localStorage.getItem('portfolio-theme')
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const theme = savedTheme || (prefersDark ? 'dark' : 'light')
+          document.documentElement.dataset.theme = theme
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#1d1713' : '#f3eee5')
+        } catch {
+          document.documentElement.dataset.theme = 'light'
+        }
+      })()
+    </script>
+    <title>Esad İkiz — Full Stack Developer</title>
   </head>
   <body>
     <div id="app"></div>
