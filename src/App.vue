@@ -133,7 +133,15 @@ onBeforeUnmount(() => revealObserver?.disconnect())
               İş deneyimi
               <span aria-hidden="true">↘</span>
             </a>
-            <a class="text-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer">GitHub profili ↗</a>
+            <div class="profile-links">
+              <a class="text-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer">GitHub profili ↗</a>
+              <a
+                class="text-link"
+                href="https://www.linkedin.com/in/esad-ikiz-b971662a9/"
+                target="_blank"
+                rel="noreferrer"
+              >LinkedIn ↗</a>
+            </div>
           </div>
         </div>
 

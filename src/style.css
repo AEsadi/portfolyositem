@@ -311,6 +311,12 @@ h1 em {
   animation: rise-in 700ms 420ms forwards;
 }
 
+.profile-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
