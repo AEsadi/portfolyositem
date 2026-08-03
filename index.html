@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Abdurrahman Esad İkiz — .NET, ASP.NET Core ve Vue.js ile modern web uygulamaları geliştiren Full Stack Developer."
+      content="Abdurrahman Esad İkiz — .NET ve Vue ile kurumsal iş akışlarını sürdürülebilir web ürünlerine dönüştüren Full Stack Developer."
     />
     <meta name="theme-color" content="#f3eee5" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:title" content="Esad İkiz — Full Stack Developer" />
+    <meta
+      property="og:description"
+      content=".NET, Vue ve SQL Server ile kurumsal web sistemleri geliştiren Full Stack Developer."
+    />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%2317110e'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='25' fill='%23fbf7ef' font-family='Georgia'%3EEİ%3C/text%3E%3C/svg%3E"
+    />
     <script>
       ;(() => {
         try {
@@ -15,7 +33,7 @@
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
           const theme = savedTheme || (prefersDark ? 'dark' : 'light')
           document.documentElement.dataset.theme = theme
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#1d1713' : '#f3eee5')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#11100f' : '#f3eee5')
         } catch {
           document.documentElement.dataset.theme = 'light'
         }
