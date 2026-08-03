@@ -368,9 +368,14 @@ button:focus-visible {
   display: block;
   width: 100%;
   overflow: hidden;
-  padding-right: 0.08em;
-  padding-bottom: 0.08em;
+  margin-top: -0.18em;
+  margin-bottom: -0.16em;
+  padding: 0.18em 0.08em 0.16em 0;
   text-align: center;
+}
+
+.hero-line:first-child {
+  margin-top: 0;
 }
 
 .hero-line > span {
@@ -380,6 +385,17 @@ button:focus-visible {
 
 .hero-line-offset {
   margin-left: 0;
+}
+
+@media (min-width: 961px) {
+  .hero h1 {
+    transform: translateX(clamp(6px, 0.65vw, 10px));
+  }
+
+  .hero-line-offset > span {
+    position: relative;
+    left: 0.04em;
+  }
 }
 
 .hero-name-last {
