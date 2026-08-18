@@ -145,6 +145,12 @@ onMounted(async () => {
         },
       })
 
+      gsap.to('.hero-stars', {
+        yPercent: -5,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.9 },
+      })
+
       gsap.to('.marquee-track', {
         xPercent: -14,
         ease: 'none',
@@ -298,6 +304,7 @@ onBeforeUnmount(() => {
     <main id="main-content" tabindex="-1">
       <section id="top" class="hero" aria-labelledby="hero-title">
         <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-stars" aria-hidden="true"><i></i><i></i><i></i></div>
 
         <div class="hero-copy">
           <p class="eyebrow hero-kicker">Full Stack Developer</p>
@@ -309,7 +316,7 @@ onBeforeUnmount(() => {
           <div class="hero-detail">
             <div class="hero-actions">
               <a class="button button-primary" href="#projeler" data-magnetic>
-                <span>Seçili projeler</span>
+                <span>Projeler</span>
                 <span aria-hidden="true">↘</span>
               </a>
               <a class="quiet-link icon-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer" aria-label="GitHub profili">

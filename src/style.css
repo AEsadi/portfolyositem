@@ -362,9 +362,121 @@ button:focus-visible {
     linear-gradient(to right, var(--line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--line) 1px, transparent 1px);
   background-size: 8.333vw 8.333vw;
-  opacity: 0.18;
+  opacity: 0.08;
   mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 72%, transparent);
   pointer-events: none;
+}
+
+.hero-stars,
+.hero-stars i {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-stars {
+  z-index: 1;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 42%, rgba(164, 77, 48, 0.14), transparent 28%),
+    radial-gradient(circle at 90% 18%, rgba(251, 247, 239, 0.08), transparent 16%);
+  will-change: transform;
+}
+
+.hero-stars i {
+  display: block;
+  width: 1px;
+  height: 1px;
+  inset: auto;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow:
+    3vw 7vh var(--ink), 11vw 28vh var(--ink), 19vw 6vh var(--ink), 27vw 48vh var(--ink),
+    34vw 19vh var(--ink), 42vw 72vh var(--ink), 49vw 35vh var(--ink), 57vw 11vh var(--ink),
+    64vw 56vh var(--ink), 70vw 25vh var(--ink), 76vw 84vh var(--ink), 82vw 43vh var(--ink),
+    89vw 14vh var(--ink), 95vw 67vh var(--ink), 14vw 88vh var(--ink), 38vw 91vh var(--ink),
+    60vw 93vh var(--ink), 91vw 95vh var(--ink);
+  opacity: 0.58;
+  animation: star-drift 48s linear infinite;
+}
+
+.hero-stars i::after {
+  position: absolute;
+  top: 100svh;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background: inherit;
+  box-shadow: inherit;
+  content: '';
+}
+
+.hero-stars i:nth-child(2) {
+  width: 2px;
+  height: 2px;
+  background: var(--accent);
+  box-shadow:
+    7vw 39vh var(--accent), 16vw 14vh var(--accent), 23vw 65vh var(--accent), 32vw 31vh var(--accent),
+    41vw 9vh var(--accent), 47vw 52vh var(--accent), 54vw 22vh var(--accent), 61vw 78vh var(--accent),
+    67vw 39vh var(--accent), 74vw 6vh var(--accent), 80vw 58vh var(--accent), 87vw 29vh var(--accent),
+    93vw 82vh var(--accent);
+  filter: drop-shadow(0 0 3px var(--accent));
+  opacity: 0.76;
+  animation-duration: 82s;
+  animation-delay: -26s;
+}
+
+.hero-stars i:nth-child(3) {
+  width: 3px;
+  height: 3px;
+  background: var(--cream);
+  box-shadow:
+    12vw 17vh var(--cream), 29vw 77vh var(--cream), 44vw 28vh var(--cream), 58vw 63vh var(--cream),
+    72vw 15vh var(--cream), 85vw 49vh var(--cream), 96vw 8vh var(--cream);
+  filter: drop-shadow(0 0 5px rgba(251, 247, 239, 0.9));
+  opacity: 0.88;
+  animation-duration: 126s;
+  animation-delay: -64s;
+}
+
+@keyframes star-drift {
+  to {
+    transform: translateY(-100svh);
+  }
+}
+
+:root[data-theme='dark'] .hero-stars {
+  background:
+    radial-gradient(circle at 78% 42%, rgba(223, 128, 89, 0.17), transparent 20%),
+    radial-gradient(circle at 90% 18%, rgba(251, 247, 239, 0.12), transparent 10%);
+}
+
+:root[data-theme='dark'] .hero-stars i {
+  background: var(--cream);
+  box-shadow:
+    9vw 4vh 0 -0.3px var(--cream), 19vw 11vh 0 -0.5px var(--cream), 30vw 6vh 0 -0.4px var(--cream),
+    4vw 21vh 0 -0.5px var(--cream), 16vw 28vh 0 0 var(--cream), 27vw 19vh 0 -0.4px var(--cream),
+    34vw 35vh 0 -0.5px var(--cream), 8vw 42vh 0 -0.2px var(--cream), 21vw 47vh 0 -0.4px var(--cream),
+    31vw 57vh 0 -0.5px var(--cream), 2vw 66vh 0 -0.3px var(--cream), 14vw 74vh 0 -0.4px var(--cream),
+    24vw 69vh 0 -0.5px var(--cream), 38vw 80vh 0 -0.4px var(--cream), 12vw 88vh 0 -0.3px var(--cream);
+}
+
+:root[data-theme='dark'] .hero-stars i:nth-child(2) {
+  background: var(--accent);
+  box-shadow:
+    7vw 39vh var(--accent), 16vw 14vh var(--accent), 23vw 65vh var(--accent), 32vw 31vh var(--accent),
+    41vw 9vh var(--accent), 47vw 52vh var(--accent), 54vw 22vh var(--accent), 61vw 78vh var(--accent),
+    67vw 39vh var(--accent), 74vw 6vh var(--accent), 80vw 58vh var(--accent), 87vw 29vh var(--accent),
+    93vw 82vh var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stars i {
+    animation: none;
+  }
 }
 
 .hero-copy {
