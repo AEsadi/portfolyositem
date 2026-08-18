@@ -127,6 +127,14 @@ onMounted(async () => {
     mediaContext = gsap.matchMedia()
 
     mediaContext.add('(prefers-reduced-motion: no-preference)', () => {
+      const heroTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+      heroTimeline
+        .from('.site-header', { y: -18, autoAlpha: 0, duration: 0.4 })
+        .from('.hero-kicker', { y: 16, autoAlpha: 0, duration: 0.35 }, '-=0.18')
+        .from('[data-hero-line]', { y: 28, autoAlpha: 0, duration: 0.58, stagger: 0.08 }, '-=0.18')
+        .from('.hero-actions > *', { y: 12, autoAlpha: 0, duration: 0.35, stagger: 0.06 }, '-=0.24')
+
       gsap.to('.scroll-progress', {
         scaleX: 1,
         ease: 'none',
@@ -312,13 +320,6 @@ onBeforeUnmount(() => {
               </a>
             </div>
           </div>
-        </div>
-
-        <div class="hero-meta">
-          <span>01 — Ürün</span>
-          <span>02 — Sistem</span>
-          <span>03 — Teslim</span>
-          <a href="#projeler">Kaydır <span aria-hidden="true">↓</span></a>
         </div>
       </section>
 
