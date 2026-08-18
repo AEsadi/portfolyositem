@@ -20,8 +20,8 @@ const projects = [
     label: 'Konaklama teknolojileri',
     title: 'Multi-tenant otel yönetim sistemi',
     summary:
-      'Farklı otellerin aynı ürün içinde güvenle çalıştığı yapıda veri modeli, kullanıcı işlemleri ve operasyon akışlarını geliştiriyorum.',
-    focus: 'Backend servisleri · Veri modeli · Kullanıcı akışları',
+      'Aynı uygulamayı kullanan farklı oteller için veri ayrımını, kullanıcı işlemlerini ve günlük operasyon ekranlarını geliştiriyorum.',
+    focus: 'Servisler · Veri modeli · Operasyon ekranları',
     technologies: ['ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'REST'],
     variant: 'hotel',
   },
@@ -30,8 +30,8 @@ const projects = [
     label: 'Kurumsal sistemler',
     title: 'Navision entegre web ERP',
     summary:
-      'Kurumsal ERP sisteminde backend iş akışları, raporlama ve Navision entegrasyonlarını tek, sürdürülebilir ürün akışında buluşturuyorum.',
-    focus: 'İş akışları · Raporlama · Sistem entegrasyonu',
+      'ERP tarafında iş akışları, raporlar ve Navision bağlantıları üzerinde çalışıyorum; ihtiyaçları web tarafında kullanılabilir ekranlara taşıyorum.',
+    focus: 'İş akışları · Raporlar · Navision entegrasyonu',
     technologies: ['.NET', 'MediatR', 'DevExpress Reporting', 'Navision'],
     variant: 'erp',
   },
@@ -41,19 +41,19 @@ const capabilities = [
   {
     index: '01',
     title: 'Uygulama geliştirme',
-    description: 'Arayüzden API katmanına uzanan, ürünün tamamını gözeten web geliştirme.',
+    description: 'Web arayüzleri, API’ler ve bu katmanlar arasındaki bağlantılar.',
     items: ['C#', '.NET', 'ASP.NET Core', 'Vue.js', 'JavaScript'],
   },
   {
     index: '02',
     title: 'Veri & entegrasyon',
-    description: 'İş kurallarını doğru veri modeli ve güvenilir servis bağlantılarıyla kurma.',
+    description: 'İş kuralları, SQL veri modelleri ve dış sistem bağlantıları.',
     items: ['SQL Server', 'Entity Framework Core', 'REST API', 'Azure AI Translator'],
   },
   {
     index: '03',
     title: 'Teslim & operasyon',
-    description: 'Kodun üretime uzanan yolunu izleyen, sorun çözmeye odaklı geliştirme yaklaşımı.',
+    description: 'Yayın süreçleri, hata takibi ve canlıdaki ihtiyaçlara göre iyileştirmeler.',
     items: ['GitHub Actions', 'Jenkins', 'IIS', 'Hangfire', 'Git / GitHub'],
   },
 ]
@@ -145,10 +145,10 @@ onMounted(async () => {
         .from('.hero-visual-inner', { y: 24, autoAlpha: 0, duration: 1.1 }, '-=1')
         .from('.hero-meta > *', { y: 14, autoAlpha: 0, duration: 0.55, stagger: 0.08 }, '-=0.55')
 
-      gsap.from('.system-path', {
+      gsap.from('.system-spoke', {
         strokeDashoffset: 1,
         duration: 1.5,
-        stagger: 0.09,
+        stagger: 0.08,
         ease: 'power2.inOut',
         delay: 0.55,
       })
@@ -167,16 +167,15 @@ onMounted(async () => {
         transformOrigin: '50% 50%',
       })
 
-      gsap.fromTo(
-        '.visual-scanner',
-        { yPercent: 0, autoAlpha: 0 },
-        {
-          yPercent: 620,
-          autoAlpha: 0.65,
-          duration: 2.2,
-          ease: 'power2.inOut',
-        },
-      )
+      gsap.from('.system-node', {
+        autoAlpha: 0,
+        scale: 0.55,
+        duration: 0.65,
+        stagger: 0.12,
+        ease: 'back.out(2)',
+        delay: 0.8,
+        transformOrigin: '50% 50%',
+      })
 
       gsap.to('.scroll-progress', {
         scaleX: 1,
@@ -336,7 +335,6 @@ onBeforeUnmount(() => {
 
       <nav class="site-nav" aria-label="Ana menü">
         <a href="#projeler">Projeler</a>
-        <a href="#yaklasim">Yaklaşım</a>
         <a href="#yetkinlikler">Yetkinlikler</a>
       </nav>
 
@@ -367,7 +365,7 @@ onBeforeUnmount(() => {
         <div class="hero-grid" aria-hidden="true"></div>
 
         <div class="hero-copy">
-          <p class="eyebrow hero-kicker"><span>İstanbul / TR</span> Full Stack Developer</p>
+          <p class="eyebrow hero-kicker">Full Stack Developer</p>
           <h1 id="hero-title">
             <span class="hero-line" data-hero-line><span class="hero-name-first">ESAD</span></span>
             <span class="hero-line hero-line-offset" data-hero-line><span class="hero-name-last">İKİZ</span></span>
@@ -375,7 +373,7 @@ onBeforeUnmount(() => {
 
           <div class="hero-detail">
             <p class="hero-summary">
-              .NET ve Vue ile kurumsal iş akışlarını yalın, sürdürülebilir web ürünlerine dönüştürüyorum.
+              Web tabanlı yazılımlar geliştiriyorum.
             </p>
             <div class="hero-actions">
               <a class="button button-primary" href="#projeler" data-magnetic>
@@ -390,26 +388,24 @@ onBeforeUnmount(() => {
 
         <div class="hero-visual" aria-hidden="true">
           <div class="hero-visual-inner">
-            <span class="visual-caption">Full-stack system / live</span>
-            <span class="visual-scanner"></span>
+            <span class="visual-caption">Software architecture</span>
             <svg class="system-map" viewBox="0 0 640 640" role="presentation">
-              <circle class="orbit-ring orbit-ring-a" cx="320" cy="320" r="236" />
-              <circle class="orbit-ring orbit-ring-b" cx="320" cy="320" r="166" />
-              <path class="system-path" pathLength="1" d="M117 205 232 275 320 155 435 253 531 185" />
-              <path class="system-path" pathLength="1" d="M109 421 227 369 320 482 421 378 535 445" />
-              <path class="system-path system-path-soft" pathLength="1" d="M232 275 227 369M435 253 421 378M320 155V482" />
-              <g class="system-node" transform="translate(117 205)"><circle r="9" /><text x="18" y="5">VUE</text></g>
-              <g class="system-node" transform="translate(531 185)"><circle r="9" /><text x="-76" y="-18">API</text></g>
-              <g class="system-node" transform="translate(109 421)"><circle r="9" /><text x="18" y="5">SQL</text></g>
-              <g class="system-node" transform="translate(535 445)"><circle r="9" /><text x="-90" y="28">CI / CD</text></g>
+              <circle class="system-halo" cx="320" cy="320" r="224" />
+              <circle class="orbit-ring orbit-ring-a" cx="320" cy="320" r="190" />
+              <circle class="orbit-ring orbit-ring-b" cx="320" cy="320" r="124" />
+              <path class="system-spoke" pathLength="1" d="M320 242V142" />
+              <path class="system-spoke" pathLength="1" d="M398 320H498" />
+              <path class="system-spoke" pathLength="1" d="M320 398V498" />
+              <path class="system-spoke" pathLength="1" d="M242 320H142" />
+              <g class="system-node" transform="translate(320 122)"><circle r="9" /><text text-anchor="middle" y="-20">WEB</text></g>
+              <g class="system-node" transform="translate(518 320)"><circle r="9" /><text x="20" y="5">API</text></g>
+              <g class="system-node" transform="translate(320 518)"><circle r="9" /><text text-anchor="middle" y="32">DEPLOY</text></g>
+              <g class="system-node" transform="translate(122 320)"><circle r="9" /><text x="-20" y="5" text-anchor="end">DATA</text></g>
               <g class="system-core" transform="translate(320 320)">
                 <circle r="72" />
                 <text text-anchor="middle" y="8">.NET</text>
               </g>
             </svg>
-            <span class="orbit-chip orbit-chip-one">Interface</span>
-            <span class="orbit-chip orbit-chip-two">Data</span>
-            <span class="orbit-chip orbit-chip-three">Delivery</span>
           </div>
         </div>
 
@@ -429,40 +425,15 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <section id="yaklasim" class="about-section section-pad">
-        <div class="section-label" data-reveal>
-          <span>01</span>
-          <span>Yaklaşım</span>
-        </div>
-
-        <div class="about-content">
-          <p class="eyebrow" data-reveal>Arayüzün arkasındaki sistemi de tasarlamak</p>
-          <h2 data-reveal>
-            Backend mantığını, veri akışını ve arayüzü
-            <em>tek bir ürün</em> gibi düşünüyorum.
-          </h2>
-          <div class="about-copy" data-reveal>
-            <p>
-              Kurumsal ERP ve otel yönetim sistemlerinde servislerden veri modeline, raporlamadan kullanıcı
-              arayüzüne kadar ürünün farklı katmanlarında çalışıyorum.
-            </p>
-            <p>
-              Amacım yalnızca çalışan kod üretmek değil; anlaşılır, sürdürülebilir ve gerçek operasyonun
-              yükünü taşıyan sistemler kurmak.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section id="projeler" class="work-section section-pad" aria-labelledby="work-title">
         <header class="work-heading" data-reveal>
           <div class="section-label section-label-light">
-            <span>02</span>
+            <span>01</span>
             <span>Seçili işler</span>
           </div>
           <div>
             <p class="eyebrow eyebrow-light">Güncel çalışma alanı</p>
-            <h2 id="work-title">Sistemin tamamını gören geliştirme.</h2>
+            <h2 id="work-title">Üretimde kullanılan sistemler üzerine çalışıyorum.</h2>
           </div>
         </header>
 
@@ -482,6 +453,85 @@ onBeforeUnmount(() => {
               <span class="project-rule" aria-hidden="true"></span>
               <div class="project-visual" :class="`project-visual-${project.variant}`" aria-hidden="true">
                 <span class="project-visual-number">{{ project.index }}</span>
+                <svg v-if="project.variant === 'hotel'" class="project-art" viewBox="60 60 520 520" role="presentation">
+                  <path class="project-tenant-connection" d="M208 170 260 242" />
+                  <path class="project-tenant-connection" d="M432 170 380 242" />
+                  <path class="project-tenant-connection" d="M208 430 260 398" />
+                  <path class="project-tenant-connection" d="M432 430 380 398" />
+
+                  <g class="project-tenant-card" transform="translate(88 102)">
+                    <rect width="120" height="68" rx="8" />
+                    <circle cx="20" cy="22" r="4" />
+                    <text x="32" y="26">HOTEL 01</text>
+                    <text class="project-tenant-subtitle" x="20" y="49">TENANT A</text>
+                  </g>
+                  <g class="project-tenant-card" transform="translate(432 102)">
+                    <rect width="120" height="68" rx="8" />
+                    <circle cx="20" cy="22" r="4" />
+                    <text x="32" y="26">HOTEL 02</text>
+                    <text class="project-tenant-subtitle" x="20" y="49">TENANT B</text>
+                  </g>
+                  <g class="project-tenant-card" transform="translate(88 430)">
+                    <rect width="120" height="68" rx="8" />
+                    <circle cx="20" cy="22" r="4" />
+                    <text x="32" y="26">HOTEL 03</text>
+                    <text class="project-tenant-subtitle" x="20" y="49">TENANT C</text>
+                  </g>
+                  <g class="project-tenant-card" transform="translate(432 430)">
+                    <rect width="120" height="68" rx="8" />
+                    <circle cx="20" cy="22" r="4" />
+                    <text x="32" y="26">HOTEL 04</text>
+                    <text class="project-tenant-subtitle" x="20" y="49">TENANT D</text>
+                  </g>
+
+                  <g class="project-tenant-core">
+                    <rect x="190" y="242" width="260" height="156" rx="12" />
+                    <text class="project-tenant-core-kicker" x="320" y="290" text-anchor="middle">SHARED CORE</text>
+                    <text class="project-tenant-core-title" x="320" y="326" text-anchor="middle">PLATFORM</text>
+                    <path d="M240 350H400" />
+                    <text class="project-tenant-core-detail" x="320" y="374" text-anchor="middle">ONE APPLICATION · ISOLATED DATA</text>
+                  </g>
+                </svg>
+                <svg v-else class="project-art" viewBox="60 60 520 520" role="presentation">
+                  <path class="project-erp-connection" d="M230 320H260" />
+                  <path class="project-erp-connection" d="M440 276 470 176M440 320H470M440 364 470 464" />
+
+                  <g class="project-erp-source" transform="translate(90 265)">
+                    <rect width="140" height="110" rx="8" />
+                    <circle cx="22" cy="27" r="5" />
+                    <text x="36" y="32">NAVISION</text>
+                    <text class="project-erp-subtitle" x="22" y="65">ERP SOURCE</text>
+                    <path d="M22 80H118" />
+                    <text class="project-erp-detail" x="22" y="98">FINANCE · STOCK</text>
+                  </g>
+
+                  <g class="project-erp-hub">
+                    <rect x="260" y="230" width="180" height="180" rx="12" />
+                    <text class="project-erp-hub-kicker" x="350" y="282" text-anchor="middle">WEB ERP</text>
+                    <text class="project-erp-hub-title" x="350" y="322" text-anchor="middle">INTEGRATION</text>
+                    <path d="M292 346H408" />
+                    <text class="project-erp-hub-detail" x="350" y="374" text-anchor="middle">BUSINESS LAYER</text>
+                  </g>
+
+                  <g class="project-erp-module" transform="translate(470 142)">
+                    <rect width="110" height="68" rx="8" />
+                    <circle cx="18" cy="22" r="4" />
+                    <text x="30" y="27">RAPORLAR</text>
+                    <text class="project-erp-module-subtitle" x="18" y="49">REPORTING</text>
+                  </g>
+                  <g class="project-erp-module" transform="translate(470 286)">
+                    <rect width="110" height="68" rx="8" />
+                    <circle cx="18" cy="22" r="4" />
+                    <text x="30" y="27">AKIŞLAR</text>
+                    <text class="project-erp-module-subtitle" x="18" y="49">WORKFLOWS</text>
+                  </g>
+                  <g class="project-erp-module" transform="translate(470 430)">
+                    <rect width="110" height="68" rx="8" />
+                    <circle cx="18" cy="22" r="4" />
+                    <text x="30" y="27">EKRANLAR</text>
+                    <text class="project-erp-module-subtitle" x="18" y="49">USERS</text>
+                  </g>
+                </svg>
                 <div class="project-diagram">
                   <span v-for="item in project.technologies" :key="item">{{ item }}</span>
                 </div>
@@ -506,12 +556,12 @@ onBeforeUnmount(() => {
       <section id="yetkinlikler" class="capabilities-section section-pad" aria-labelledby="capabilities-title">
         <header class="capabilities-heading">
           <div class="section-label" data-reveal>
-            <span>03</span>
+            <span>02</span>
             <span>Yetkinlikler</span>
           </div>
           <div data-reveal>
-            <p class="eyebrow">Teknoloji & araçlar</p>
-            <h2 id="capabilities-title">Fikirden üretime uzanan teknik kapsam.</h2>
+            <p class="eyebrow">Teknolojiler & araçlar</p>
+            <h2 id="capabilities-title">Günlük geliştirmelerde kullandığım teknik alanlar.</h2>
           </div>
         </header>
 
@@ -531,12 +581,12 @@ onBeforeUnmount(() => {
 
       <section class="profile-section section-pad">
         <div class="section-label" data-reveal>
-          <span>04</span>
+          <span>03</span>
           <span>Profil</span>
         </div>
         <div class="profile-main">
-          <p class="eyebrow" data-reveal>Eğitim & yön</p>
-          <h2 data-reveal>Merakla öğrenen,<br /><em>üreterek derinleşen.</em></h2>
+          <p class="eyebrow" data-reveal>Eğitim</p>
+          <h2 data-reveal>Bilgisayar<br /><em>Programcılığı.</em></h2>
           <div class="profile-details" data-reveal>
             <div>
               <span>Balıkesir Üniversitesi</span>
@@ -552,8 +602,8 @@ onBeforeUnmount(() => {
 
       <section class="contact-section section-pad" aria-labelledby="contact-title">
         <div class="contact-orbit" aria-hidden="true"><span></span><span></span></div>
-        <p class="eyebrow eyebrow-light" data-reveal>Yeni bir fikir mi var?</p>
-        <h2 id="contact-title" data-reveal>Birlikte<br /><em>üretelim.</em></h2>
+        <p class="eyebrow eyebrow-light" data-reveal>İletişim</p>
+        <h2 id="contact-title" data-reveal>İletişim<br /><em>bilgileri.</em></h2>
         <div class="contact-bottom" data-reveal>
           <a class="button button-light" href="mailto:ikizesad99@gmail.com" data-magnetic>
             <span>E-posta gönder</span>
