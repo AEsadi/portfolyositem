@@ -41,19 +41,16 @@ const capabilities = [
   {
     index: '01',
     title: 'Uygulama geliştirme',
-    description: 'Web arayüzleri, API’ler ve bu katmanlar arasındaki bağlantılar.',
     items: ['C#', '.NET', 'ASP.NET Core', 'Vue.js', 'JavaScript'],
   },
   {
     index: '02',
     title: 'Veri & entegrasyon',
-    description: 'İş kuralları, SQL veri modelleri ve dış sistem bağlantıları.',
     items: ['SQL Server', 'Entity Framework Core', 'REST API', 'Azure AI Translator'],
   },
   {
     index: '03',
-    title: 'Teslim & operasyon',
-    description: 'Yayın süreçleri, hata takibi ve canlıdaki ihtiyaçlara göre iyileştirmeler.',
+    title: 'Geliştirme süreçleri',
     items: ['GitHub Actions', 'Jenkins', 'IIS', 'Hangfire', 'Git / GitHub'],
   },
 ]
@@ -130,53 +127,6 @@ onMounted(async () => {
     mediaContext = gsap.matchMedia()
 
     mediaContext.add('(prefers-reduced-motion: no-preference)', () => {
-      const heroTimeline = gsap.timeline({ defaults: { ease: 'power4.out' } })
-
-      heroTimeline
-        .from('.site-header', { yPercent: -110, autoAlpha: 0, duration: 0.85 })
-        .from('.hero-kicker', { y: 22, autoAlpha: 0, duration: 0.7 }, '-=0.35')
-        .from(
-          '[data-hero-line] > span',
-          { yPercent: 115, rotate: 2, duration: 1.15, stagger: 0.1 },
-          '-=0.42',
-        )
-        .from('.hero-summary', { y: 26, autoAlpha: 0, duration: 0.75 }, '-=0.65')
-        .from('.hero-actions > *', { y: 18, autoAlpha: 0, duration: 0.65, stagger: 0.09 }, '-=0.5')
-        .from('.hero-visual-inner', { y: 24, autoAlpha: 0, duration: 1.1 }, '-=1')
-        .from('.hero-meta > *', { y: 14, autoAlpha: 0, duration: 0.55, stagger: 0.08 }, '-=0.55')
-
-      gsap.from('.system-spoke', {
-        strokeDashoffset: 1,
-        duration: 1.5,
-        stagger: 0.08,
-        ease: 'power2.inOut',
-        delay: 0.55,
-      })
-
-      gsap.from('.orbit-ring-a', {
-        rotate: -24,
-        duration: 1.8,
-        ease: 'power3.out',
-        transformOrigin: '50% 50%',
-      })
-
-      gsap.from('.orbit-ring-b', {
-        rotate: 32,
-        duration: 2,
-        ease: 'power3.out',
-        transformOrigin: '50% 50%',
-      })
-
-      gsap.from('.system-node', {
-        autoAlpha: 0,
-        scale: 0.55,
-        duration: 0.65,
-        stagger: 0.12,
-        ease: 'back.out(2)',
-        delay: 0.8,
-        transformOrigin: '50% 50%',
-      })
-
       gsap.to('.scroll-progress', {
         scaleX: 1,
         ease: 'none',
@@ -253,24 +203,6 @@ onMounted(async () => {
     mediaContext.add(
       '(min-width: 960px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
       () => {
-        const visual = select('.hero-visual')[0]
-        const visualInner = select('.hero-visual-inner')[0]
-        const moveX = gsap.quickTo(visualInner, 'x', { duration: 0.9, ease: 'power3.out' })
-        const moveY = gsap.quickTo(visualInner, 'y', { duration: 0.9, ease: 'power3.out' })
-
-        const handleVisualMove = (event) => {
-          const bounds = visual.getBoundingClientRect()
-          moveX(((event.clientX - bounds.left) / bounds.width - 0.5) * 28)
-          moveY(((event.clientY - bounds.top) / bounds.height - 0.5) * 28)
-        }
-
-        const handleVisualLeave = () => {
-          moveX(0)
-          moveY(0)
-        }
-
-        visual.addEventListener('pointermove', handleVisualMove)
-        visual.addEventListener('pointerleave', handleVisualLeave)
         const removeMagneticTargets = registerMagneticTargets(select('[data-magnetic]'))
 
         gsap.to('.hero-name-first', {
@@ -285,17 +217,7 @@ onMounted(async () => {
           scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.7 },
         })
 
-        gsap.to('.hero-visual-inner', {
-          rotate: 12,
-          scale: 1.08,
-          yPercent: 12,
-          ease: 'none',
-          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.8 },
-        })
-
         return () => {
-          visual.removeEventListener('pointermove', handleVisualMove)
-          visual.removeEventListener('pointerleave', handleVisualLeave)
           removeMagneticTargets()
         }
       },
@@ -354,7 +276,12 @@ onBeforeUnmount(() => {
             <path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.5 8.5 0 1 0 20.2 15.2Z" />
           </svg>
         </button>
-        <a class="header-contact" href="mailto:ikizesad99@gmail.com">Konuşalım <span aria-hidden="true">↗</span></a>
+        <a class="header-contact icon-link icon-link--mail" href="mailto:ikizesad99@gmail.com" aria-label="E-posta gönder">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m4 7 8 6 8-6" />
+          </svg>
+        </a>
       </div>
 
       <span class="scroll-progress" aria-hidden="true"></span>
@@ -372,40 +299,18 @@ onBeforeUnmount(() => {
           </h1>
 
           <div class="hero-detail">
-            <p class="hero-summary">
-              Web tabanlı yazılımlar geliştiriyorum.
-            </p>
             <div class="hero-actions">
               <a class="button button-primary" href="#projeler" data-magnetic>
                 <span>Seçili projeler</span>
                 <span aria-hidden="true">↘</span>
               </a>
-              <a class="quiet-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer">GitHub ↗</a>
-              <a class="quiet-link" href="https://www.linkedin.com/in/esad-ikiz-b971662a9/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a class="quiet-link icon-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer" aria-label="GitHub profili">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.7a9.3 9.3 0 0 0-2.94 18.12c.47.09.64-.2.64-.46v-1.8c-2.6.57-3.15-1.1-3.15-1.1-.42-1.08-1.04-1.36-1.04-1.36-.85-.58.06-.57.06-.57.94.07 1.43.96 1.43.96.84 1.42 2.2 1.01 2.73.77.08-.6.33-1.01.6-1.24-2.08-.23-4.27-1.04-4.27-4.64 0-1.03.37-1.87.97-2.53-.1-.24-.42-1.2.09-2.5 0 0 .8-.26 2.56.96A8.9 8.9 0 0 1 12 6.55c.78 0 1.56.1 2.3.31 1.76-1.22 2.55-.96 2.55-.96.51 1.3.19 2.26.1 2.5.6.66.96 1.5.96 2.53 0 3.61-2.2 4.4-4.29 4.63.34.29.63.84.63 1.7v2.52c0 .26.17.56.65.46A9.3 9.3 0 0 0 12 2.7Z" /></svg>
+              </a>
+              <a class="quiet-link icon-link" href="https://www.linkedin.com/in/esad-ikiz-b971662a9/" target="_blank" rel="noreferrer" aria-label="LinkedIn profili">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.1 8.6H3.2V21h2.9V8.6ZM4.65 3A1.68 1.68 0 1 0 4.7 6.35 1.68 1.68 0 0 0 4.65 3ZM20.8 13.9c0-3.75-2-5.5-4.68-5.5-2.16 0-3.13 1.19-3.67 2.02V8.6H9.56V21h2.9v-6.14c0-1.62.3-3.18 2.31-3.18 1.98 0 2 1.85 2 3.28V21h2.9v-7.1Z" /></svg>
+              </a>
             </div>
-          </div>
-        </div>
-
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hero-visual-inner">
-            <span class="visual-caption">Software architecture</span>
-            <svg class="system-map" viewBox="0 0 640 640" role="presentation">
-              <circle class="system-halo" cx="320" cy="320" r="224" />
-              <circle class="orbit-ring orbit-ring-a" cx="320" cy="320" r="190" />
-              <circle class="orbit-ring orbit-ring-b" cx="320" cy="320" r="124" />
-              <path class="system-spoke" pathLength="1" d="M320 242V142" />
-              <path class="system-spoke" pathLength="1" d="M398 320H498" />
-              <path class="system-spoke" pathLength="1" d="M320 398V498" />
-              <path class="system-spoke" pathLength="1" d="M242 320H142" />
-              <g class="system-node" transform="translate(320 122)"><circle r="9" /><text text-anchor="middle" y="-20">WEB</text></g>
-              <g class="system-node" transform="translate(518 320)"><circle r="9" /><text x="20" y="5">API</text></g>
-              <g class="system-node" transform="translate(320 518)"><circle r="9" /><text text-anchor="middle" y="32">DEPLOY</text></g>
-              <g class="system-node" transform="translate(122 320)"><circle r="9" /><text x="-20" y="5" text-anchor="end">DATA</text></g>
-              <g class="system-core" transform="translate(320 320)">
-                <circle r="72" />
-                <text text-anchor="middle" y="8">.NET</text>
-              </g>
-            </svg>
           </div>
         </div>
 
@@ -425,15 +330,11 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <section id="projeler" class="work-section section-pad" aria-labelledby="work-title">
+      <section id="projeler" class="work-section section-pad" aria-label="İş deneyimi ve seçili projeler">
         <header class="work-heading" data-reveal>
           <div class="section-label section-label-light">
             <span>01</span>
-            <span>Seçili işler</span>
-          </div>
-          <div>
-            <p class="eyebrow eyebrow-light">Güncel çalışma alanı</p>
-            <h2 id="work-title">Üretimde kullanılan sistemler üzerine çalışıyorum.</h2>
+            <span>İş deneyimi</span>
           </div>
         </header>
 
@@ -561,7 +462,7 @@ onBeforeUnmount(() => {
           </div>
           <div data-reveal>
             <p class="eyebrow">Teknolojiler & araçlar</p>
-            <h2 id="capabilities-title">Günlük geliştirmelerde kullandığım teknik alanlar.</h2>
+            <h2 id="capabilities-title">Günlük tech stack’im.</h2>
           </div>
         </header>
 
@@ -570,7 +471,6 @@ onBeforeUnmount(() => {
             <span>{{ capability.index }}</span>
             <div>
               <h3>{{ capability.title }}</h3>
-              <p>{{ capability.description }}</p>
             </div>
             <ul>
               <li v-for="item in capability.items" :key="item">{{ item }}</li>
@@ -586,7 +486,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="profile-main">
           <p class="eyebrow" data-reveal>Eğitim</p>
-          <h2 data-reveal>Bilgisayar<br /><em>Programcılığı.</em></h2>
+          <h2 data-reveal>Eğitim</h2>
           <div class="profile-details" data-reveal>
             <div>
               <span>Balıkesir Üniversitesi</span>
@@ -605,15 +505,16 @@ onBeforeUnmount(() => {
         <p class="eyebrow eyebrow-light" data-reveal>İletişim</p>
         <h2 id="contact-title" data-reveal>İletişim<br /><em>bilgileri.</em></h2>
         <div class="contact-bottom" data-reveal>
-          <a class="button button-light" href="mailto:ikizesad99@gmail.com" data-magnetic>
-            <span>E-posta gönder</span>
-            <span aria-hidden="true">↗</span>
-          </a>
-          <div class="contact-links">
-            <a href="mailto:ikizesad99@gmail.com">E-posta ↗</a>
-            <a href="tel:+905442438922">Telefon ↗</a>
-            <a href="https://www.linkedin.com/in/esad-ikiz-b971662a9/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-            <a href="https://github.com/AEsadi" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <div class="contact-links" aria-label="İletişim bağlantıları">
+            <a class="icon-link icon-link--mail" href="mailto:ikizesad99@gmail.com" aria-label="E-posta gönder">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+            </a>
+            <a class="icon-link" href="https://www.linkedin.com/in/esad-ikiz-b971662a9/" target="_blank" rel="noreferrer" aria-label="LinkedIn profili">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.1 8.6H3.2V21h2.9V8.6ZM4.65 3A1.68 1.68 0 1 0 4.7 6.35 1.68 1.68 0 0 0 4.65 3ZM20.8 13.9c0-3.75-2-5.5-4.68-5.5-2.16 0-3.13 1.19-3.67 2.02V8.6H9.56V21h2.9v-6.14c0-1.62.3-3.18 2.31-3.18 1.98 0 2 1.85 2 3.28V21h2.9v-7.1Z" /></svg>
+            </a>
+            <a class="icon-link" href="https://github.com/AEsadi" target="_blank" rel="noreferrer" aria-label="GitHub profili">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.7a9.3 9.3 0 0 0-2.94 18.12c.47.09.64-.2.64-.46v-1.8c-2.6.57-3.15-1.1-3.15-1.1-.42-1.08-1.04-1.36-1.04-1.36-.85-.58.06-.57.06-.57.94.07 1.43.96 1.43.96.84 1.42 2.2 1.01 2.73.77.08-.6.33-1.01.6-1.24-2.08-.23-4.27-1.04-4.27-4.64 0-1.03.37-1.87.97-2.53-.1-.24-.42-1.2.09-2.5 0 0 .8-.26 2.56.96A8.9 8.9 0 0 1 12 6.55c.78 0 1.56.1 2.3.31 1.76-1.22 2.55-.96 2.55-.96.51 1.3.19 2.26.1 2.5.6.66.96 1.5.96 2.53 0 3.61-2.2 4.4-4.29 4.63.34.29.63.84.63 1.7v2.52c0 .26.17.56.65.46A9.3 9.3 0 0 0 12 2.7Z" /></svg>
+            </a>
           </div>
         </div>
       </section>
@@ -621,7 +522,6 @@ onBeforeUnmount(() => {
 
     <footer class="site-footer">
       <span>© {{ currentYear }} Abdurrahman Esad İkiz</span>
-      <span>Full Stack Developer · İstanbul</span>
       <a href="#top">Yukarı dön ↑</a>
     </footer>
   </div>
