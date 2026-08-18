@@ -315,7 +315,7 @@ onBeforeUnmount(() => {
 
           <div class="hero-detail">
             <div class="hero-actions">
-              <a class="button button-primary" href="#projeler" data-magnetic>
+              <a class="button button-primary" href="#projeler">
                 <span>Projeler</span>
                 <span aria-hidden="true">↘</span>
               </a>
